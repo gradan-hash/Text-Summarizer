@@ -12,3 +12,16 @@ try:
 except Exception as e:
     logger.exception(e)
     raise e
+
+
+STAGE_NAME = "Data Validation Stage"
+
+try:
+    logger.info(f">>>>> stage{STAGE_NAME} started")
+    data_validation = DataIngestionTrainingPipeline()
+    data_ingestion.main()
+    logger.info(f">>>>>> stage {STAGE_NAME} completed \n")
+
+except Exception as e:
+    logger.exception(e)
+    raise e
