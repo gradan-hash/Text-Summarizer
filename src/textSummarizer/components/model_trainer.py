@@ -5,7 +5,8 @@ from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 from datasets import load_dataset, load_from_disk
 import torch
 from src.textSummarizer.entity import ModelTrainerConfig
-
+from src.textSummarizer.constants import *
+import os
 
 class ModelTrainer:
     def __init__(self, config: ModelTrainerConfig):
@@ -16,6 +17,7 @@ class ModelTrainer:
         tokenizer = AutoTokenizer.from_pretrained(self.config.model_ckpt)
         model_pegasus = AutoModelForSeq2SeqLM.from_pretrained(
             self.config.model_ckpt).to(device)
+        
         seq2seq_data_collator = DataCollatorForSeq2Seq(
             tokenizer, model=model_pegasus)
 
