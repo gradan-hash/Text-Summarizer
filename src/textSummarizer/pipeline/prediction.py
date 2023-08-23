@@ -8,15 +8,17 @@ class PredictionPipeline:
         self.config = ConfigurationManager().get_model_evaluation()
 
     def predict(self, text):
-        AutoTokenizer = AutoTokenizer.from_pretrained(
-            self.config.tokenizer_path)
-
+        tokenizer = AutoTokenizer.from_pretrained(self.config.tokenizer_path)
         gen_kwargs = {"length_penalty": 0.8, "num_beams": 8, "max_length": 128}
 
         pipe = pipeline("summarization",
-                        model="pegasus-samsum-model", tokenizer=f)
+                        model=self.config.model_path, tokenizer=tokenizer)
 
-        output = pipe(text, **gen_kwargs[0]["summary_text"])
+        print("Dialogue:")
+        print(text)
 
+        output = pipe(text, **gen_kwargs)[0]["summary_text"]
+        print("\nModel Summary:")
         print(output)
+
         return output
